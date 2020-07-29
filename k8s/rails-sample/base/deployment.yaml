@@ -1,0 +1,26 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rails-sample
+spec:
+  selector:
+    matchLabels:
+      app: rails-sample
+  template:
+    metadata:
+      labels:
+        app: rails-sample
+    spec:
+      containers:
+        - name: app
+          image: rails-sample
+          env:
+            - name: RAILS_ENV
+              value: development
+            - name: RAILS_LOG_TO_STDOUT
+              value: "true"
+            - name: RAILS_SAMPLE_DATABASE_HOST
+              value: rails-sample-postgres.tools.svc.cluster.local
+            - name: RAILS_SAMPLE_DATABASE_PASSWORD
+              value: password
