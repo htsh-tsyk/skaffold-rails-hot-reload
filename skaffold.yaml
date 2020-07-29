@@ -1,0 +1,23 @@
+apiVersion: skaffold/v2beta5
+kind: Config
+build:
+  artifacts:
+    - image: rails-sample
+      context: src/rails-sample
+profiles:
+  - name: dev
+    activation:
+      - command: dev
+    build:
+      artifacts:
+        - image: rails-sample
+          context: src/rails-sample
+          sync:
+            manual:
+              - src: "**/*.rb"
+                dest: .
+    deploy:
+      kustomize:
+        paths:
+          - ./k8s/tools
+          - ./k8s/rails-sample/development
